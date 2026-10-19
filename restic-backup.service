@@ -1,0 +1,10 @@
+[Unit]
+Description=Restic Backup Service
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+Type=oneshot
+ExecStart=/home/kot/projects/restic-iac/backup-restic.sh
+User=root
+Group=root

@@ -1,0 +1,11 @@
+[Unit]
+Description=Trigger Restic Backup Daily
+
+[Timer]
+# Run daily at 16:00 (after all app-level dumps at ~15:00-15:30)
+OnCalendar=*-*-* 16:00:00
+Persistent=true
+RandomizedDelaySec=15min
+
+[Install]
+WantedBy=timers.target
