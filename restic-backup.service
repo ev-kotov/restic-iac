@@ -5,6 +5,6 @@ After=network-online.target
 
 [Service]
 Type=oneshot
-ExecStart=/home/kot/projects/restic-iac/backup-restic.sh
+ExecStart=/usr/local/bin/backup-restic.sh
 User=root
 Group=root

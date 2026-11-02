@@ -8,6 +8,12 @@ PROJECT_DIR="/home/kot/projects/restic-iac"
 ## shellcheck disable=SC1091
 source "$PROJECT_DIR/restic.env" 
 
+base_log_step "Copied backup script to /usr/local/bin"
+
+sudo cp "$PROJECT_DIR/backup-restic.sh" /usr/local/bin/backup-restic.sh
+sudo chmod 700 /usr/local/bin/backup-restic.sh
+sudo chcon -t bin_t /usr/local/bin/backup-restic.sh
+
 base_log_step "Preparing directories and files"
 
 SYSTEMD_DIR="/etc/systemd/system"
@@ -15,8 +21,6 @@ REPO_DIR="$RESTIC_MOUNT_POINT/restic-repo"
 
 base_log_step "Correct permissions"
 
-chmod 700 "$PROJECT_DIR/backup-restic.sh"
-chmod +x "$PROJECT_DIR/backup-restic.sh"
 sudo chmod 600 "$RESTIC_PASSWORD_FILE"
 sudo chown root:root "$RESTIC_PASSWORD_FILE"
 
@@ -31,7 +35,7 @@ fi
 sudo mkdir -p "$RESTIC_MOUNT_POINT"
 sudo mount "$RESTIC_DEVICE" "$RESTIC_MOUNT_POINT"
 
-if [ ! -d "$REPO_DIR/config" ]; then
+if [ ! -f "$REPO_DIR/config" ]; then
     base_log_info "Initializing new repository at $REPO_DIR"
     sudo mkdir -p "$REPO_DIR"
 
